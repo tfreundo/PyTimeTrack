@@ -3,4 +3,4 @@
 reports = "reports"
 
 [development]
-devmode = true
+devmode = false

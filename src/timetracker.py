@@ -2,6 +2,7 @@ import tomllib
 from datetime import datetime
 import json
 import os
+import argparse
 
 
 class TimeTracker:
@@ -65,8 +66,8 @@ class MonthlyFileHandler:
                 file.write(json.dumps(self.EMPTY_FILESTRUCTURE, indent=2))
 
 
-def main():
-    with open("config.toml", "rb") as config_file:
+def main(args: dict):
+    with open(args.config, "rb") as config_file:
         config = tomllib.load(config_file)
 
     # Start app
@@ -78,4 +79,15 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        description="PyTimeTrack - Your minimalistic time tracking tool."
+    )
+    parser.add_argument(
+        "--config",
+        required=False,
+        default="config",
+        help="Name of a custom config.toml file to use.",
+    )
+
+    args = parser.parse_args()
+    main(args)
