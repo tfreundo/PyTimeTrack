@@ -18,9 +18,15 @@ class MonthlyFileHandler:
             else f"{self.config['paths']['reports']}/DEV_{today.month}_{today.year}.json"
         )
 
-    def read_current_report(self) -> dict:
-        with open(self.current_report_filename(), "r") as file:
+    def report_path_by_filename(self, report_name: str) -> str:
+        return f"{self.config['paths']['reports']}/{report_name}.json"
+
+    def read_report(self, report_path: str):
+        with open(report_path, "r") as file:
             return json.load(file)
+
+    def read_current_report(self) -> dict:
+        return self.read_report(self.current_report_filename())
 
     def write_current_report(self, report: dict) -> None:
         with open(self.current_report_filename(), "w") as file:
