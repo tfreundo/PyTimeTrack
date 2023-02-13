@@ -1,4 +1,5 @@
 import tomllib
+from pathlib import Path
 from datetime import datetime
 import json
 import os
@@ -67,7 +68,9 @@ class MonthlyFileHandler:
 
 
 def main(args: dict):
-    with open(args.config, "rb") as config_file:
+    with open(
+        Path(__file__).parent.parent / f"{args.config}.toml", "rb"
+    ) as config_file:
         config = tomllib.load(config_file)
 
     # Start app
