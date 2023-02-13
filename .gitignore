@@ -1,3 +1,7 @@
+# General
 .vscode
+__pycache__
+
+# PyTimeTrack specific
 reports/*.json
 *_config.toml
