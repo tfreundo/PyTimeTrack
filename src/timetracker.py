@@ -40,9 +40,9 @@ class MonthlyFileHandler:
     def current_report_filename(self) -> str:
         today = datetime.today()
         return (
-            f"reports/{today.month}_{today.year}.json"
+            f"{self.config['paths']['reports']}/{today.month}_{today.year}.json"
             if not self.config["development"]["devmode"]
-            else f"reports/DEV_{today.month}_{today.year}.json"
+            else f"{self.config['paths']['reports']}/DEV_{today.month}_{today.year}.json"
         )
 
     def read_current_report(self) -> dict:

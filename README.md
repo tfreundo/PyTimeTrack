@@ -6,4 +6,5 @@ You can configure PyTimeTracker to your needs using the [config.toml](./config.t
 
 | Section | Param | Description |
 | ------- | ----- | ----------- |
-| development | devmode | Activates the development mode only necessary when developing features for this app |
+| paths | reports | The path to a folder where the reports shall be stored. |
+| development | devmode | Activates (if set to true) the development mode only necessary when developing features for this app. |
