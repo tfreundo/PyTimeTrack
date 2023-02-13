@@ -1,0 +1,4 @@
+# Configuration of PyTimeTracker
+
+[development]
+devmode = true
