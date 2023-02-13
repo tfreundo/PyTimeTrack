@@ -15,7 +15,11 @@ def main(args: dict):
     fh = MonthlyFileHandler(config)
     tt = TimeTracker()
     report = fh.read_current_report()
-    report = tt.track(report)
+
+    if args.workbreak:
+        report = tt.work_break(report)
+    else:
+        report = tt.track(report)
     fh.write_current_report(report)
 
 
@@ -28,6 +32,12 @@ if __name__ == "__main__":
         required=False,
         default="config",
         help="Name of a custom config.toml file to use.",
+    )
+    parser.add_argument(
+        "--workbreak",
+        required=False,
+        action="store_true",
+        help="Track the start/stop of a work break.",
     )
 
     args = parser.parse_args()
