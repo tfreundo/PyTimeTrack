@@ -1,6 +1,10 @@
 # Configuration of PyTimeTracker
+[work]
+target_daily_work_minutes = 480
+
 [paths]
 reports = "reports"
 
 [development]
 devmode = false
+logging_level = "WARN"

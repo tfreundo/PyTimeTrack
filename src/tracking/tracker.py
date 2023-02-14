@@ -1,3 +1,4 @@
+import logging
 from typing import Final
 from datetime import datetime
 
@@ -9,6 +10,8 @@ class TimeTracker:
     KEY_END: Final[str] = "end"
     KEY_WORKBREAKS: Final[str] = "breaks"
     KEY_COMMENT: Final[str] = "comment"
+
+    logger = logging.getLogger(__name__)
 
     def __time_now(self) -> datetime:
         return datetime.now()
@@ -30,22 +33,24 @@ class TimeTracker:
 
         if not (today_str in report.keys()):
             # Create empty time track
-            print("Creating empty time track")
+            self.logger.info("Creating empty time track")
             report[today_str] = today_time_track
 
         if report[today_str] and report[today_str][self.KEY_START] == "":
             start_time = self.__now_str()
-            print(f"Tracking start time: {start_time}")
+            self.logger.info(f"Tracking start time: {start_time}")
             report[today_str][self.KEY_START] = start_time
 
         elif report[today_str] and report[today_str][self.KEY_START] != "":
             end_time = self.__now_str()
-            print(f"Tracking end time: {end_time}")
+            self.logger.info(f"Tracking end time: {end_time}")
             report[today_str][self.KEY_END] = end_time
 
         return report
 
     def work_break(self, report: dict) -> dict:
         today_str = self.__today_str()
-        report[today_str][self.KEY_WORKBREAKS].append(self.__now_str())
+        break_time = self.__now_str()
+        self.logger.info(f"Tracking break time: {break_time}")
+        report[today_str][self.KEY_WORKBREAKS].append(break_time)
         return report
