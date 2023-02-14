@@ -1,5 +1,5 @@
 import logging
-from typing import Final
+from typing import Final, Tuple
 from datetime import datetime
 
 
@@ -11,8 +11,12 @@ class PlausibilityChecker:
         return {"day": day, "error": error}
 
     def validate(
-        self, report: dict, check_start_end: bool = True, check_breaks: bool = True
-    ) -> bool:
+        self,
+        report: dict,
+        check_start_end: bool = True,
+        check_breaks: bool = True,
+        wait_for_input: bool = True,
+    ) -> Tuple[bool, list]:
         errors = []
 
         for day in report.keys():
@@ -64,9 +68,10 @@ class PlausibilityChecker:
 
         if len(errors) == 0:
             self.logger.info("Report is valid.")
-            return True
+            return True, []
         error_msg = f"Report has the following errors:\n{errors}"
         self.logger.error(error_msg)
         print(errors)
-        input("Please confirm and fix the report.")
-        return False
+        if wait_for_input:
+            input("Please confirm and fix the report.")
+        return False, errors
