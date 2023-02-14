@@ -1,4 +1,5 @@
 import pytest
+import datetime
 from statistics.stats_generator import StatsGenerator
 
 
@@ -25,11 +26,21 @@ class TestStatsGenerator:
         }
 
     def test_daily_worked_minutes(self, statsgen: StatsGenerator, test_report: dict):
-        result = statsgen.daily_worked_minutes(test_report)
-        assert result["01.02.2023"]["total_work_minutes"] == 516
-        assert result["01.02.2023"]["total_break_minutes"] == 0
-        assert result["13.02.2023"]["total_work_minutes"] == 743
-        assert result["13.02.2023"]["total_break_minutes"] == 96
+        df_result = statsgen.daily_worked_minutes(
+            report=test_report, target_daily_work_minutes=480
+        )
+
+        a = df_result.loc[0]["day"]
+        b = a == datetime.date(year=2023, month=2, day=1)
+
+        assert df_result.loc[0]["day"] == datetime.date(year=2023, month=2, day=1)
+        assert df_result.loc[0]["total_work_minutes"] == 516
+        assert df_result.loc[0]["total_break_minutes"] == 0
+        assert df_result.loc[0]["total_work_without_break"] == 516
+        assert df_result.loc[1]["day"] == datetime.date(year=2023, month=2, day=13)
+        assert df_result.loc[1]["total_work_minutes"] == 743
+        assert df_result.loc[1]["total_break_minutes"] == 96
+        assert df_result.loc[1]["total_work_without_break"] == 647
 
     def test_daily_worked_minutes_unplausible_breaks(self, statsgen: StatsGenerator):
         # There has to be an even number of breaks as otherwise a break has not ended
@@ -42,4 +53,4 @@ class TestStatsGenerator:
             }
         }
         with pytest.raises(AssertionError):
-            statsgen.daily_worked_minutes(report)
+            statsgen.daily_worked_minutes(report=report, target_daily_work_minutes=480)
