@@ -33,7 +33,6 @@ class StatsGenerator:
                 dt_start = datetime.strptime(
                     f"{day} {report[day]['start']}", self.DATETIME_FORMAT
                 )
-                # TODO Drop the day completely, if end is not yet tracked (ongoing day)
                 dt_end = datetime.strptime(
                     f"{day} {report[day]['end']}", self.DATETIME_FORMAT
                 )
