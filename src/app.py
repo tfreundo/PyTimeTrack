@@ -22,7 +22,7 @@ def main(args: dict):
     logging.basicConfig(
         level=config["development"]["logging_level"],
         # https://docs.python.org/2/library/logging.html#logrecord-attributes
-        format="%(asctime)s -- %(module)s -- (%(levelname)s): %(message)s",
+        format=f"%(asctime)s -- %(module)s | {args.config} -- (%(levelname)s): %(message)s",
         filename="output.log",
         encoding="utf-8",
     )
