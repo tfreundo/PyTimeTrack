@@ -40,11 +40,13 @@ def main(args: dict):
         statsgen = StatsGenerator()
         statsvis = StatsVisualization()
         report = fh.read_report(fh.report_path_by_filename(report_filename))
-        stats_daily_worked_minutes = statsgen.daily_worked_minutes(report)
-        print(stats_daily_worked_minutes)
+        df_stats_daily_worked_minutes = statsgen.daily_worked_minutes(
+            report, config["work"]["target_daily_work_minutes"]
+        )
+        print(df_stats_daily_worked_minutes)
         statsvis.bar_daily_worked_minutes(
             title=f"Daily Worked Minutes ({report_filename})",
-            stats=stats_daily_worked_minutes,
+            stats=df_stats_daily_worked_minutes,
         )
     else:
         logger.info("Tracking time")
