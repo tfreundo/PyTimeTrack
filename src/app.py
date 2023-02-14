@@ -34,8 +34,9 @@ def main(args: dict):
         current_report = tt.work_break(current_report)
         fh.write_current_report(current_report)
     elif args.stats:
-        # TODO Shortcut to use current_report instead of a specific report (most common use case)
         report_filename = args.stats.replace(".json", "")
+        if args.stats == "current":
+            report_filename = fh.current_report_filename()
         logger.info(f"Creating stats for {report_filename}")
         statsgen = StatsGenerator()
         statsvis = StatsVisualization()
