@@ -43,11 +43,15 @@ def main(args: dict):
         if args.stats == "current":
             report_filename = fh.current_report_filename()
         logger.info(f"Creating stats for {report_filename}")
-        statsgen = StatsGenerator()
+        statsgen = StatsGenerator(
+            default_break_after_6h=config["work"]["default_break_after_6h"],
+            default_break_after_9h=config["work"]["default_break_after_9h"],
+        )
         statsvis = StatsVisualization()
         report = fh.read_report(fh.report_path_by_filename(report_filename))
         df_stats_daily_worked_minutes = statsgen.daily_worked_minutes(
-            report, config["work"]["target_daily_work_minutes"]
+            report=report,
+            target_daily_work_minutes=config["work"]["target_daily_work_minutes"],
         )
         print(df_stats_daily_worked_minutes)
         statsvis.bar_daily_worked_minutes(

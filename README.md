@@ -14,6 +14,8 @@ You can configure PyTimeTracker to your needs using the [config.toml](./config.t
 | Section | Param | Description |
 | ------- | ----- | ----------- |
 | work | target_daily_work_minutes | The amount of minutes you have to work per day |
+| work | default_break_after_6h | Amount of minutes to include after 6h of work. Set to `0` to deactivate |
+| work | default_break_after_9h | Amount of minutes to include after 9h of work.  Set to `0` to deactivate|
 | paths | reports | The path to a folder where the reports shall be stored. |
 | development | devmode | Activates (if set to true) the development mode only necessary when developing features for this app. |
 
