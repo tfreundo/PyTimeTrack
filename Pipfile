@@ -4,6 +4,7 @@ verify_ssl = true
 name = "PyTimeTrack"
 
 [packages]
+matplotlib = "~=3.7"
 
 [dev-packages]
 black = "*"

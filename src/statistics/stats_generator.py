@@ -1,8 +1,11 @@
+import logging
 from typing import Final
 from datetime import datetime
 
+
 class StatsGenerator:
     DATETIME_FORMAT: Final[str] = "%d.%m.%Y %H:%M"
+    logger = logging.getLogger(__name__)
 
     def __datetime_diff_in_minutes(self, start: datetime, end: datetime) -> int:
         return (end - start).seconds / 60
@@ -30,9 +33,9 @@ class StatsGenerator:
             total_break_time = 0.0
             breaks = report[day]["breaks"]
             if (len(breaks) % 2) != 0:
-                raise AssertionError(
-                    "There was an uneven number of breaks, meaning a break was started but not ended. Please fix this."
-                )
+                err_msg = "There was an uneven number of breaks, meaning a break was started but not ended. Can not create statistics."
+                self.logger.warn(err_msg)
+                raise AssertionError(err_msg)
             # Split into chunks of two values (start and stop of break)
             for i in range(0, len(breaks), 2):
                 breaks_chunk = breaks[i : i + 2]
