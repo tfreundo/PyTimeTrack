@@ -1,5 +1,5 @@
 import pytest
-from src.statistics.stats_generator import StatsGenerator
+from statistics.stats_generator import StatsGenerator
 
 
 class TestStatsGenerator:
@@ -31,5 +31,15 @@ class TestStatsGenerator:
         assert result["13.02.2023"]["total_work_minutes"] == 743
         assert result["13.02.2023"]["total_break_minutes"] == 96
 
-    # TODO Test assertion for uneven breaks
-    # TODO Extend tests in general
+    def test_daily_worked_minutes_unplausible_breaks(self, statsgen: StatsGenerator):
+        # There has to be an even number of breaks as otherwise a break has not ended
+        report = {
+            "01.01.2022": {
+                "start": "00:00",
+                "end": "15:00",
+                "breaks": ["08:12"],
+                "comment": "",
+            }
+        }
+        with pytest.raises(AssertionError):
+            statsgen.daily_worked_minutes(report)
