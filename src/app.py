@@ -50,22 +50,22 @@ def main(args: dict):
         report = fh.read_report(fh.report_path_by_filename(report_filename))
         logger.info(f"Validating report {report_filename}")
         report_is_valid = pc.validate(report)
-        if report_is_valid:
-            logger.info(f"Creating stats for {report_filename}")
-            statsgen = StatsGenerator(
-                default_break_after_6h=config["work"]["default_break_after_6h"],
-                default_break_after_9h=config["work"]["default_break_after_9h"],
-            )
-            statsvis = StatsVisualization()
-            df_stats_daily_worked_minutes = statsgen.daily_worked_minutes(
-                report=report,
-                target_daily_work_minutes=config["work"]["target_daily_work_minutes"],
-            )
-            print(df_stats_daily_worked_minutes)
-            statsvis.bar_daily_worked_minutes(
-                title=f"Daily Worked Minutes ({report_filename})",
-                stats=df_stats_daily_worked_minutes,
-            )
+        # Show the stats anyways
+        logger.info(f"Creating stats for {report_filename}")
+        statsgen = StatsGenerator(
+            default_break_after_6h=config["work"]["default_break_after_6h"],
+            default_break_after_9h=config["work"]["default_break_after_9h"],
+        )
+        statsvis = StatsVisualization()
+        df_stats_daily_worked_minutes = statsgen.daily_worked_minutes(
+            report=report,
+            target_daily_work_minutes=config["work"]["target_daily_work_minutes"],
+        )
+        print(df_stats_daily_worked_minutes)
+        statsvis.bar_daily_worked_minutes(
+            title=f"Daily Worked Minutes ({report_filename})",
+            stats=df_stats_daily_worked_minutes,
+        )
     else:
         current_report = fh.read_current_report()
         logger.info(f"Validating report {fh.current_report_filename()}")
