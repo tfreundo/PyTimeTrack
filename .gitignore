@@ -6,3 +6,4 @@ __pycache__
 reports/*.json
 *_config.toml
 *.bat
+output.log

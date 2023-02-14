@@ -1,10 +1,12 @@
 from datetime import datetime
 import json
 import os
+import logging
 
 
 class MonthlyFileHandler:
     EMPTY_FILESTRUCTURE = {}
+    logger = logging.getLogger(__name__)
 
     def __init__(self, config: dict) -> None:
         self.config = config
@@ -35,10 +37,12 @@ class MonthlyFileHandler:
     def __create_monthly_file(self):
         """Creates a monthly report file if non exists"""
         if os.path.exists(self.current_report_filename()):
-            print(
+            self.logger.info(
                 f'Monthly report file "{self.current_report_filename()}" already exists.'
             )
         else:
-            print(f'Creating report file "{self.current_report_filename()}".')
+            self.logger.info(
+                f'Creating report file "{self.current_report_filename()}".'
+            )
             with open(self.current_report_filename(), "w") as file:
                 file.write(json.dumps(self.EMPTY_FILESTRUCTURE, indent=2))

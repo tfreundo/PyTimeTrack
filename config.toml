@@ -4,3 +4,4 @@ reports = "reports"
 
 [development]
 devmode = false
+logging_level = "WARN"

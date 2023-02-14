@@ -1,3 +1,4 @@
+import logging
 import tomllib
 from pathlib import Path
 import argparse
@@ -11,6 +12,15 @@ def main(args: dict):
         Path(__file__).parent.parent / f"{args.config.replace('.json', '')}.toml", "rb"
     ) as config_file:
         config = tomllib.load(config_file)
+
+    # Initialize logging (applies to all module level loggers)
+    logging.basicConfig(
+        level=config["development"]["logging_level"],
+        # https://docs.python.org/2/library/logging.html#logrecord-attributes
+        format="%(asctime)s -- %(module)s -- (%(levelname)s): %(message)s",
+        filename="output.log",
+        encoding="utf-8",
+    )
 
     # Start app
     fh = MonthlyFileHandler(config)
