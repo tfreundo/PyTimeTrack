@@ -11,7 +11,10 @@ from statistics.stats_visualization import StatsVisualization
 def main(args: dict):
     logger = logging.getLogger(__name__)
     with open(
-        Path(__file__).parent.parent / f"{args.config.replace('.json', '')}.toml", "rb"
+        Path(__file__).parent.parent / args.config
+        if args.config.endswith(".toml")
+        else f"{args.config}.toml",
+        "rb",
     ) as config_file:
         config = tomllib.load(config_file)
 
@@ -34,7 +37,9 @@ def main(args: dict):
         current_report = tt.work_break(current_report)
         fh.write_current_report(current_report)
     elif args.stats:
-        report_filename = args.stats.replace(".json", "")
+        report_filename = (
+            args.stats if args.stats.endswith(".json") else f"{args.stats}.json"
+        )
         if args.stats == "current":
             report_filename = fh.current_report_filename()
         logger.info(f"Creating stats for {report_filename}")
