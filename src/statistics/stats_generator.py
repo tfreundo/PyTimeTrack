@@ -79,7 +79,6 @@ class StatsGenerator:
                 )
                 total_work_time = self.__datetime_diff_in_minutes(dt_start, dt_end)
                 row_work_times.append(total_work_time)
-                # TODO total_break (if no breaks in array, use the default break setting from config?)
                 total_break_time = 0.0
                 breaks = report[day]["breaks"]
                 if (len(breaks) % 2) != 0:
