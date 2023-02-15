@@ -2,14 +2,22 @@ import logging
 import tomllib
 from pathlib import Path
 import argparse
-
-from statistics.stats_generator import StatsGenerator
-from statistics.stats_visualization import StatsVisualization
-from validation.plausibility_checker import PlausibilityChecker
 from ui.tray_gui import TrayGui
 
 
-def main(args: dict):
+def main():
+    parser = argparse.ArgumentParser(
+        description="PyTimeTrack - Your minimalistic time tracking tool."
+    )
+    parser.add_argument(
+        "--config",
+        required=False,
+        default="config",
+        help="Name of a custom config.toml file to use.",
+    )
+
+    args = parser.parse_args()
+
     with open(
         Path(__file__).parent.parent / args.config
         if args.config.endswith(".toml")
@@ -29,7 +37,6 @@ def main(args: dict):
     ui = TrayGui(config)
     ui.start()
 
-    # TODO Executable
     # TODO Update Readme (args, new images about tray icon and notifications etc., tested platforms -> Windows)
     # TODO FEATURE How long do I have to still work for today?
 
@@ -63,15 +70,4 @@ def main(args: dict):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="PyTimeTrack - Your minimalistic time tracking tool."
-    )
-    parser.add_argument(
-        "--config",
-        required=False,
-        default="config",
-        help="Name of a custom config.toml file to use.",
-    )
-
-    args = parser.parse_args()
-    main(args)
+    main()

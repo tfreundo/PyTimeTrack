@@ -11,6 +11,7 @@ pystray = "~=0.19"
 [dev-packages]
 black = "*"
 pytest = "*"
+pyinstaller = "*"
 
 [requires]
 python_version = "3.11"

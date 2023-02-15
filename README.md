@@ -56,3 +56,7 @@ You can configure PyTimeTracker to your needs using the [config.toml](./config.t
 | development | devmode | Activates (if set to true) the development mode only necessary when developing features for this app. |
 
 To use another custom config TOML, see [Arguments](#arguments).
+
+## Building the executable
+PyInstaller is used for building the executable 
+(notice, that it still needs the `__init__.py` files in each module even if Python itself doesn't need it anymore since version 3.3+).
