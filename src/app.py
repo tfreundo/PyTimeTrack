@@ -29,6 +29,10 @@ def main(args: dict):
     ui = TrayGui(config)
     ui.start()
 
+    # TODO Executable
+    # TODO Update Readme (args, new images about tray icon and notifications etc., tested platforms -> Windows)
+    # TODO FEATURE How long do I have to still work for today?
+
     # TODO I should still allow (through args) to e.g. show stats for older months
 
     # elif args.stats:

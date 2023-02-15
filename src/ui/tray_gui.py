@@ -15,6 +15,7 @@ class TrayGui:
     ITEM_STARTSTOP_WORK_NAME: Final[str] = "Start/Stop Work"
     ITEM_STARTSTOP_BREAK_NAME: Final[str] = "Start/Stop Break"
     ITEM_MONTHLY_STATS_NAME: Final[str] = "Monthly Statistics"
+    ITEM_EXIT_NAME: Final[str] = "Exit"
 
     def __init__(self, config) -> None:
         self.config = config
@@ -43,6 +44,7 @@ class TrayGui:
             MenuItem(
                 self.ITEM_MONTHLY_STATS_NAME, action=self.__on_monthly_stats_clicked
             ),
+            MenuItem(self.ITEM_EXIT_NAME, action=lambda icon, item: icon.stop()),
         ]
         menu = Menu(*menu_items)
 
