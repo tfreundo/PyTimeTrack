@@ -36,14 +36,6 @@ and helps you keep track with visualizations:
 
 ![example_stats.png](images/example_stats.png)
 
-## Arguments
-
-| Argument | Description |
-| -------- | ----------- |
-| --config | Name of a custom config file to use. |
-| --workbreak | Track the start/stop of a work break. |
-| --stats | Create statistics for the given report. For the current report of this month use the keyword `current`. |
-
 ## Configuration
 You can configure PyTimeTracker to your needs using the [config.toml](./config.toml).
 
@@ -57,6 +49,7 @@ You can configure PyTimeTracker to your needs using the [config.toml](./config.t
 
 To use another custom config TOML, see [Arguments](#arguments).
 
-## Building the executable
-PyInstaller is used for building the executable 
-(notice, that it still needs the `__init__.py` files in each module even if Python itself doesn't need it anymore since version 3.3+).
+## Tested Platforms
+PyTimeTrack is for now only tested on **Windows**, should however be compatible to other platforms as well.
+
+Just try to build it your own using PyInstaller (see [build_win.ps1](build_win.ps1)). If you needed to do adoptions, open an Pull Request and I'll review it. 

@@ -1,27 +1,11 @@
 import logging
 import tomllib
-from pathlib import Path
-import argparse
 from ui.tray_gui import TrayGui
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="PyTimeTrack - Your minimalistic time tracking tool."
-    )
-    parser.add_argument(
-        "--config",
-        required=False,
-        default="config",
-        help="Name of a custom config.toml file to use.",
-    )
-
-    args = parser.parse_args()
-
     with open(
-        Path(__file__).parent.parent / args.config
-        if args.config.endswith(".toml")
-        else f"{args.config}.toml",
+        "config.toml",
         "rb",
     ) as config_file:
         config = tomllib.load(config_file)
@@ -30,7 +14,7 @@ def main():
     logging.basicConfig(
         level=config["development"]["logging_level"],
         # https://docs.python.org/2/library/logging.html#logrecord-attributes
-        format=f"%(asctime)s -- %(module)s | {args.config} -- (%(levelname)s): %(message)s",
+        format=f"%(asctime)s -- %(module)s -- (%(levelname)s): %(message)s",
         filename="output.log",
         encoding="utf-8",
     )
