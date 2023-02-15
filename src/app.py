@@ -21,8 +21,6 @@ def main():
     ui = TrayGui(config)
     ui.start()
 
-    # TODO FEATURE How long do I have to still work for today?
-
 
 if __name__ == "__main__":
     main()
