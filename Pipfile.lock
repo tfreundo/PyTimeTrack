@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "dd27ca728cc145ea0a56d1fc798f3747bc396a5ea22a4908c0bea0f71f6907c5"
+            "sha256": "f56b4928993175bc41003d4298c91a50a7a0dc20d6ed37ce81a992d1af11a8e8"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -245,7 +245,7 @@
                 "sha256:f64bb98ac59b3ea3bf74b02f13836eb2e24e48e0ab0145bbda646295769bd780",
                 "sha256:f9006288bcf4895917d02583cf3411f98631275bc67cce355a7f39f8c14338fa"
             ],
-            "markers": "python_version >= '3.11'",
+            "markers": "python_version >= '3.8'",
             "version": "==1.24.2"
         },
         "packaging": {
@@ -379,6 +379,15 @@
             ],
             "markers": "python_full_version >= '3.6.8'",
             "version": "==3.0.9"
+        },
+        "pystray": {
+            "hashes": [
+                "sha256:09d086c55d352f6b6ab14c14ccdf9e6a71f621f93f61773f773d8c02a12ce1cf",
+                "sha256:858784d4e969fe8b5bee6b5476432cf136e7087fdeaf4a1424b13f4f4de87155",
+                "sha256:aeae1b62d8dbc5a6603fe5c018cddbdfadb0dc332cf7af0997b38ef9f0ceb71c"
+            ],
+            "index": "PyTimeTrack",
+            "version": "==0.19.4"
         },
         "python-dateutil": {
             "hashes": [
