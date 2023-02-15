@@ -1,7 +1,11 @@
 # PyTimeTrack
 Your minimalistic time tracking tool.
 
-It helps you track your time in data format that is easy to read and to manipulate:
+It lives in your tray:
+
+![tray2.png](images/tray2.png)
+
+tracks your time in a data format that is easy to read and to manually adapt if necessary:
 
 ```json
 {
@@ -32,9 +36,9 @@ It helps you track your time in data format that is easy to read and to manipula
 }
 ```
 
-and helps you keep track with visualizations:
+and visualizes the data to help you keep track:
 
-![example_stats.png](images/example_stats.png)
+![example_stats.png](images/stats.png)
 
 ## Configuration
 You can configure PyTimeTracker to your needs using the [config.toml](./config.toml).
