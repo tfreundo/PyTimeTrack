@@ -15,7 +15,6 @@ class PlausibilityChecker:
         report: dict,
         check_start_end: bool = True,
         check_breaks: bool = True,
-        wait_for_input: bool = True,
     ) -> Tuple[bool, list]:
         errors = []
 
@@ -71,7 +70,5 @@ class PlausibilityChecker:
             return True, []
         error_msg = f"Report has the following errors:\n{errors}"
         self.logger.error(error_msg)
-        print(errors)
-        if wait_for_input:
-            input("Please confirm and fix the report.")
+
         return False, errors
