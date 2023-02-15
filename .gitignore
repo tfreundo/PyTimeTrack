@@ -7,3 +7,5 @@ reports/*.json
 *_config.toml
 *.bat
 output.log
+build
+dist

@@ -1,7 +1,11 @@
 # PyTimeTrack
 Your minimalistic time tracking tool.
 
-It helps you track your time in data format that is easy to read and to manipulate:
+It lives in your tray:
+
+![tray2.png](images/tray2.png)
+
+tracks your time in a data format that is easy to read and to manually adapt if necessary:
 
 ```json
 {
@@ -32,17 +36,9 @@ It helps you track your time in data format that is easy to read and to manipula
 }
 ```
 
-and helps you keep track with visualizations:
+and visualizes the data to help you keep track:
 
-![example_stats.png](images/example_stats.png)
-
-## Arguments
-
-| Argument | Description |
-| -------- | ----------- |
-| --config | Name of a custom config file to use. |
-| --workbreak | Track the start/stop of a work break. |
-| --stats | Create statistics for the given report. For the current report of this month use the keyword `current`. |
+![example_stats.png](images/stats.png)
 
 ## Configuration
 You can configure PyTimeTracker to your needs using the [config.toml](./config.toml).
@@ -56,3 +52,8 @@ You can configure PyTimeTracker to your needs using the [config.toml](./config.t
 | development | devmode | Activates (if set to true) the development mode only necessary when developing features for this app. |
 
 To use another custom config TOML, see [Arguments](#arguments).
+
+## Tested Platforms
+PyTimeTrack is for now only tested on **Windows**, should however be compatible to other platforms as well.
+
+Just try to build it your own using PyInstaller (see [build_win.ps1](build_win.ps1)). If you needed to do adoptions, open an Pull Request and I'll review it. 

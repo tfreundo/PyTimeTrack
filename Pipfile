@@ -6,10 +6,12 @@ name = "PyTimeTrack"
 [packages]
 matplotlib = "~=3.7"
 pandas = "~=1.5"
+pystray = "~=0.19"
 
 [dev-packages]
 black = "*"
 pytest = "*"
+pyinstaller = "*"
 
 [requires]
 python_version = "3.11"

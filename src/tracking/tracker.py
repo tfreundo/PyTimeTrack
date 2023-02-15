@@ -1,5 +1,5 @@
 import logging
-from typing import Final
+from typing import Final, Tuple
 from datetime import datetime
 
 
@@ -22,7 +22,15 @@ class TimeTracker:
     def __today_str(self) -> str:
         return self.__time_now().strftime(self.DAY_FORMAT)
 
-    def track(self, report: dict) -> dict:
+    def track(self, report: dict) -> Tuple[dict, str]:
+        """Tracks start or stop of working
+
+        Args:
+            report (dict): The report to use
+
+        Returns:
+            Tuple[dict, str]: The updated report and a message what was updated
+        """
         today_str = self.__today_str()
         today_time_track = {
             self.KEY_START: "",
@@ -31,26 +39,44 @@ class TimeTracker:
             self.KEY_COMMENT: "",
         }
 
+        result_msg = ""
+
         if not (today_str in report.keys()):
             # Create empty time track
             self.logger.info("Creating empty time track")
             report[today_str] = today_time_track
 
-        if report[today_str] and report[today_str][self.KEY_START] == "":
-            start_time = self.__now_str()
-            self.logger.info(f"Tracking start time: {start_time}")
-            report[today_str][self.KEY_START] = start_time
+        if report[today_str]:
+            # There was no start time yet
+            if report[today_str][self.KEY_START] == "":
+                start_time = self.__now_str()
+                result_msg = f"Tracked work start time: {start_time}"
+                self.logger.info(result_msg)
+                report[today_str][self.KEY_START] = start_time
 
-        elif report[today_str] and report[today_str][self.KEY_START] != "":
-            end_time = self.__now_str()
-            self.logger.info(f"Tracking end time: {end_time}")
-            report[today_str][self.KEY_END] = end_time
+            # There was no end time yet
+            elif report[today_str][self.KEY_START] != "":
+                end_time = self.__now_str()
+                result_msg = f"Tracked work end time: {end_time}"
+                self.logger.info(result_msg)
+                report[today_str][self.KEY_END] = end_time
 
-        return report
+        return (report, result_msg)
 
-    def work_break(self, report: dict) -> dict:
+    def work_break(self, report: dict) -> Tuple[dict, str]:
+        """Tracks start or stop of a working break
+
+        Args:
+            report (dict): The report to use
+
+        Returns:
+            Tuple[dict, str]: The updated report and a message what was updated
+        """
         today_str = self.__today_str()
         break_time = self.__now_str()
-        self.logger.info(f"Tracking break time: {break_time}")
         report[today_str][self.KEY_WORKBREAKS].append(break_time)
-        return report
+        result_msg = f"Tracked break start time: {break_time}"
+        if len(report[today_str][self.KEY_WORKBREAKS]) % 2 == 0:
+            result_msg = f"Tracked break end time: {break_time}"
+        self.logger.info(result_msg)
+        return (report, result_msg)
