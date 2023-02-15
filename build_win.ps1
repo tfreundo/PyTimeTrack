@@ -5,7 +5,7 @@ Push-Location src
 Write-Host "Cleaning build artefacts ..." -ForegroundColor DarkGreen
 Remove-Item -Recurse -Force build
 Remove-Item -Recurse -Force dist
-Write-Host "Building executable ..."
+Write-Host "Building executable ..."  -ForegroundColor DarkGreen
 pipenv run python -m PyInstaller app.spec
 Pop-Location
 
