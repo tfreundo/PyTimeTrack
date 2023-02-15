@@ -12,6 +12,7 @@ from statistics.stats_visualization import StatsVisualization
 class TrayGui:
     logger = logging.getLogger(__name__)
 
+    ITEM_SHOW_TODAY_NAME: Final[str] = "Show Today"
     ITEM_STARTSTOP_WORK_NAME: Final[str] = "Start/Stop Work"
     ITEM_STARTSTOP_BREAK_NAME: Final[str] = "Start/Stop Break"
     ITEM_MONTHLY_STATS_NAME: Final[str] = "Monthly Statistics"
@@ -35,12 +36,15 @@ class TrayGui:
 
     def __create_menu(self) -> Menu:
         menu_items = [
+            MenuItem(self.ITEM_SHOW_TODAY_NAME, action=self.__on_show_today_clicked),
+            Menu.SEPARATOR,
             MenuItem(
                 self.ITEM_STARTSTOP_WORK_NAME, action=self.__on_startstop_work_clicked
             ),
             MenuItem(
                 self.ITEM_STARTSTOP_BREAK_NAME, action=self.__on_workbreak_clicked
             ),
+            Menu.SEPARATOR,
             MenuItem(
                 self.ITEM_MONTHLY_STATS_NAME, action=self.__on_monthly_stats_clicked
             ),
@@ -122,3 +126,15 @@ class TrayGui:
                 title=f"Daily Worked Minutes ({report_filename})",
                 stats=df_stats_daily_worked_minutes,
             )
+
+    def __on_show_today_clicked(self, icon: Icon, item: str) -> None:
+        current_report = self.fh.read_current_report()
+        today_data = self.tt.get_today(current_report)
+        if today_data is None:
+            self.__send_notification(
+                icon, "Could not find data for today. Start tracking first."
+            )
+        else:
+            today_info = f"Start: {today_data['start']}\nEnd: {today_data['end']}\nBreaks: {today_data['breaks']}"
+
+            self.__send_notification(icon, today_info)
