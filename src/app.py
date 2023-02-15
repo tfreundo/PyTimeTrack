@@ -24,34 +24,6 @@ def main():
     # TODO Update Readme (args, new images about tray icon and notifications etc., tested platforms -> Windows)
     # TODO FEATURE How long do I have to still work for today?
 
-    # TODO I should still allow (through args) to e.g. show stats for older months
-
-    # elif args.stats:
-    #     report_filename = (
-    #         args.stats if args.stats.endswith(".json") else f"{args.stats}.json"
-    #     )
-    #     if args.stats == "current":
-    #         report_filename = fh.current_report_filename()
-    #     report = fh.read_report(fh.report_path_by_filename(report_filename))
-    #     logger.info(f"Validating report {report_filename}")
-    #     report_is_valid = pc.validate(report)
-    #     # Show the stats anyways
-    #     logger.info(f"Creating stats for {report_filename}")
-    #     statsgen = StatsGenerator(
-    #         default_break_after_6h=config["work"]["default_break_after_6h"],
-    #         default_break_after_9h=config["work"]["default_break_after_9h"],
-    #     )
-    #     statsvis = StatsVisualization()
-    #     df_stats_daily_worked_minutes = statsgen.daily_worked_minutes(
-    #         report=report,
-    #         target_daily_work_minutes=config["work"]["target_daily_work_minutes"],
-    #     )
-    #     print(df_stats_daily_worked_minutes)
-    #     statsvis.bar_daily_worked_minutes(
-    #         title=f"Daily Worked Minutes ({report_filename})",
-    #         stats=df_stats_daily_worked_minutes,
-    #     )
-
 
 if __name__ == "__main__":
     main()
