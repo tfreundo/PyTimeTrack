@@ -1,6 +1,5 @@
 import pytest
-import datetime
-from validation.plausibility_checker import PlausibilityChecker
+from src.validation.plausibility_checker import PlausibilityChecker
 
 
 class TestStatsGenerator:
@@ -17,7 +16,7 @@ class TestStatsGenerator:
                 "comment": "qweqwe",
             }
         }
-        result, errors = pc.validate(report, wait_for_input=False)
+        result, errors = pc.validate(report)
         assert result == True
         assert len(errors) == 0
 
@@ -30,7 +29,7 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report, wait_for_input=False)
+        result, errors = pc.validate(report)
         assert result == False
         assert len(errors) == 1
 
@@ -43,7 +42,7 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report, wait_for_input=False)
+        result, errors = pc.validate(report)
         assert result == False
         assert len(errors) == 1
 
@@ -56,7 +55,7 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report, wait_for_input=False)
+        result, errors = pc.validate(report)
         assert result == False
         assert len(errors) == 1
 
@@ -69,9 +68,7 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(
-            report, wait_for_input=False, check_start_end=False
-        )
+        result, errors = pc.validate(report, check_start_end=False)
         assert result == True
         assert len(errors) == 0
 
@@ -84,6 +81,6 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report, wait_for_input=False, check_breaks=False)
+        result, errors = pc.validate(report, check_breaks=False)
         assert result == True
         assert len(errors) == 0
