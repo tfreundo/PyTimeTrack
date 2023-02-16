@@ -1,6 +1,7 @@
 # General
 .vscode
 __pycache__
+.pytest_cache
 
 # PyTimeTrack specific
 reports/*.json

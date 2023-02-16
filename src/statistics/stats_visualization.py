@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from pandas import DataFrame
-import numpy as np
 
 
 class StatsVisualization:

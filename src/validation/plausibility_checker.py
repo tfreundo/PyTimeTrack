@@ -1,11 +1,13 @@
 import logging
-from typing import Final, Tuple
-from datetime import datetime
+from typing import Tuple
+from util.datetimehandler import DateTimeHandler
 
 
 class PlausibilityChecker:
-    DATETIME_FORMAT: Final[str] = "%d.%m.%Y %H:%M"
     logger = logging.getLogger(__name__)
+
+    def __init__(self) -> None:
+        self.dth = DateTimeHandler()
 
     def __create_error(self, day: str, error: str):
         return {"day": day, "error": error}
@@ -20,11 +22,11 @@ class PlausibilityChecker:
 
         for day in report.keys():
             if report[day]["end"] != "" and check_start_end:
-                dt_start = datetime.strptime(
-                    f"{day} {report[day]['start']}", self.DATETIME_FORMAT
+                dt_start = self.dth.datetime_str_to_datetime(
+                    f"{day} {report[day]['start']}"
                 )
-                dt_end = datetime.strptime(
-                    f"{day} {report[day]['end']}", self.DATETIME_FORMAT
+                dt_end = self.dth.datetime_str_to_datetime(
+                    f"{day} {report[day]['end']}"
                 )
 
                 if dt_start > dt_end:
@@ -50,11 +52,11 @@ class PlausibilityChecker:
                 if valid_breaks:
                     for i in range(0, len(breaks), 2):
                         breaks_chunk = breaks[i : i + 2]
-                        dt_break_start = datetime.strptime(
-                            f"{day} {breaks_chunk[0]}", self.DATETIME_FORMAT
+                        dt_break_start = self.dth.datetime_str_to_datetime(
+                            f"{day} {breaks_chunk[0]}"
                         )
-                        dt_break_end = datetime.strptime(
-                            f"{day} {breaks_chunk[1]}", self.DATETIME_FORMAT
+                        dt_break_end = self.dth.datetime_str_to_datetime(
+                            f"{day} {breaks_chunk[1]}"
                         )
 
                         if dt_break_start > dt_break_end:
