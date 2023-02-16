@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 from typing import Final
 from pystray import Icon, Menu, MenuItem
 from PIL import Image, ImageDraw
@@ -12,6 +13,8 @@ from statistics.stats_visualization import StatsVisualization
 class TrayGui:
     logger = logging.getLogger(__name__)
 
+    DATETIME_FORMAT: Final[str] = "%d.%m.%Y %H:%M"
+
     ITEM_SHOW_TODAY_NAME: Final[str] = "Show Today"
     ITEM_STARTSTOP_WORK_NAME: Final[str] = "Start/Stop Work"
     ITEM_STARTSTOP_BREAK_NAME: Final[str] = "Start/Stop Break"
@@ -23,6 +26,10 @@ class TrayGui:
         self.fh = MonthlyFileHandler(self.config)
         self.tt = TimeTracker()
         self.pc = PlausibilityChecker()
+        self.statsgen = StatsGenerator(
+            default_break_after_6h=self.config["work"]["default_break_after_6h"],
+            default_break_after_9h=self.config["work"]["default_break_after_9h"],
+        )
 
     def __create_image(self, width, height, fgcolor, fg2color, bgcolor):
         image = Image.new("RGB", (width, height), bgcolor)
@@ -111,12 +118,8 @@ class TrayGui:
             self.__send_validation_error_notification(icon, errors)
         if report_is_valid:
             self.logger.info(f"Creating stats for {report_filename}")
-            statsgen = StatsGenerator(
-                default_break_after_6h=self.config["work"]["default_break_after_6h"],
-                default_break_after_9h=self.config["work"]["default_break_after_9h"],
-            )
             statsvis = StatsVisualization()
-            df_stats_daily_worked_minutes = statsgen.daily_worked_minutes(
+            df_stats_daily_worked_minutes = self.statsgen.daily_worked_minutes(
                 report=current_report,
                 target_daily_work_minutes=self.config["work"][
                     "target_daily_work_minutes"
@@ -129,12 +132,23 @@ class TrayGui:
 
     def __on_show_today_clicked(self, icon: Icon, item: str) -> None:
         current_report = self.fh.read_current_report()
-        today_data = self.tt.get_today(current_report)
+        today_str, today_data = self.tt.get_today(current_report)
         if today_data is None:
             self.__send_notification(
                 icon, "Could not find data for today. Start tracking first."
             )
         else:
-            today_info = f"Start: {today_data['start']}\nEnd: {today_data['end']}\nBreaks: {today_data['breaks']}"
+            dt_start = datetime.strptime(
+                f"{today_str} {today_data['start']}", self.DATETIME_FORMAT
+            )
+            dt_end = datetime.now()
+            if today_data["end"] != "":
+                dt_end = datetime.strptime(
+                    f"{today_str} {today_data['end']}", self.DATETIME_FORMAT
+                )
+            working_time = self.statsgen.datetime_diff_in_minutes(dt_start, dt_end)
+            working_time_h = int(working_time / 60)
+            working_time_min = int(working_time % 60)
+            today_info = f"Start: {today_data['start']}\nEnd: {today_data['end']}\nBreaks: {today_data['breaks']}\nWorking Time: {working_time_h}h {working_time_min}min"
 
             self.__send_notification(icon, today_info)

@@ -81,8 +81,16 @@ class TimeTracker:
         self.logger.info(result_msg)
         return (report, result_msg)
 
-    def get_today(self, report: dict) -> dict:
+    def get_today(self, report: dict) -> Tuple[str, dict]:
+        """Returns the data of today
+
+        Args:
+            report (dict): The report to extract the data of today from
+
+        Returns:
+            Tuple[str, dict]: Tuple of the day and the data
+        """
         today_str = self.__today_str()
         if today_str in report.keys():
-            return report[today_str]
+            return today_str, report[today_str]
         return None
