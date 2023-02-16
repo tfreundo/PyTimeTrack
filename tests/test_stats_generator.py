@@ -1,6 +1,6 @@
 import pytest
 import datetime
-from statistics.stats_generator import StatsGenerator
+from src.statistics.stats_generator import StatsGenerator
 
 
 class TestStatsGenerator:
