@@ -1,13 +1,12 @@
-import pytest
+import unittest
 from src.validation.plausibility_checker import PlausibilityChecker
 
 
-class TestStatsGenerator:
-    @pytest.fixture
-    def pc(self) -> PlausibilityChecker:
-        return PlausibilityChecker()
+class TestStatsGenerator(unittest.TestCase):
+    def setUp(self):
+        self.pc = PlausibilityChecker()
 
-    def test_validate_valid_report(self, pc: PlausibilityChecker):
+    def test_validate_valid_report(self):
         report = {
             "01.02.2023": {
                 "start": "07:11",
@@ -16,11 +15,11 @@ class TestStatsGenerator:
                 "comment": "qweqwe",
             }
         }
-        result, errors = pc.validate(report)
-        assert result == True
-        assert len(errors) == 0
+        result, errors = self.pc.validate(report)
+        self.assertTrue(result)
+        self.assertEqual(len(errors), 0)
 
-    def test_validate_start_after_end(self, pc: PlausibilityChecker):
+    def test_validate_start_after_end(self):
         report = {
             "01.02.2023": {
                 "start": "07:11",
@@ -29,11 +28,11 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report)
-        assert result == False
-        assert len(errors) == 1
+        result, errors = self.pc.validate(report)
+        self.assertFalse(result)
+        self.assertEqual(len(errors), 1)
 
-    def test_validate_uneven_amount_of_breaks(self, pc: PlausibilityChecker):
+    def test_validate_uneven_amount_of_breaks(self):
         report = {
             "01.02.2023": {
                 "start": "07:11",
@@ -42,11 +41,11 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report)
-        assert result == False
-        assert len(errors) == 1
+        result, errors = self.pc.validate(report)
+        self.assertFalse(result)
+        self.assertEqual(len(errors), 1)
 
-    def test_validate_break_start_after_break_end(self, pc: PlausibilityChecker):
+    def test_validate_break_start_after_break_end(self):
         report = {
             "01.02.2023": {
                 "start": "07:11",
@@ -55,11 +54,11 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report)
-        assert result == False
-        assert len(errors) == 1
+        result, errors = self.pc.validate(report)
+        self.assertFalse(result)
+        self.assertEqual(len(errors), 1)
 
-    def test_skip_check_start_end(self, pc: PlausibilityChecker):
+    def test_skip_check_start_end(self):
         report = {
             "01.02.2023": {
                 "start": "15:11",
@@ -68,11 +67,11 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report, check_start_end=False)
-        assert result == True
-        assert len(errors) == 0
+        result, errors = self.pc.validate(report, check_start_end=False)
+        self.assertTrue(result)
+        self.assertEqual(len(errors), 0)
 
-    def test_skip_breaks(self, pc: PlausibilityChecker):
+    def test_skip_breaks(self):
         report = {
             "01.02.2023": {
                 "start": "10:11",
@@ -81,6 +80,10 @@ class TestStatsGenerator:
                 "comment": "",
             }
         }
-        result, errors = pc.validate(report, check_breaks=False)
-        assert result == True
-        assert len(errors) == 0
+        result, errors = self.pc.validate(report, check_breaks=False)
+        self.assertTrue(result)
+        self.assertEqual(len(errors), 0)
+
+
+if __name__ == "__main__":
+    unittest.main()
