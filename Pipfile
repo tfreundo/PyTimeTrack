@@ -12,6 +12,7 @@ pystray = "~=0.19"
 black = "*"
 pytest = "*"
 pyinstaller = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.11"

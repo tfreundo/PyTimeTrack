@@ -1,7 +1,7 @@
-from datetime import datetime
 import json
 import os
 import logging
+from util.datetimehandler import DateTimeHandler
 
 
 class MonthlyFileHandler:
@@ -10,10 +10,11 @@ class MonthlyFileHandler:
 
     def __init__(self, config: dict) -> None:
         self.config = config
+        self.dth = DateTimeHandler()
         self.__create_monthly_file()
 
     def current_report_filename(self) -> str:
-        today = datetime.today()
+        today = self.dth.today()
         return (
             f"{today.month}_{today.year}.json"
             if not self.config["development"]["devmode"]

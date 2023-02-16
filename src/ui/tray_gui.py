@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 from typing import Final
 from pystray import Icon, Menu, MenuItem
 from PIL import Image, ImageDraw
@@ -8,12 +7,11 @@ from tracking.tracker import TimeTracker
 from validation.plausibility_checker import PlausibilityChecker
 from statistics.stats_generator import StatsGenerator
 from statistics.stats_visualization import StatsVisualization
+from util.datetimehandler import DateTimeHandler
 
 
 class TrayGui:
     logger = logging.getLogger(__name__)
-
-    DATETIME_FORMAT: Final[str] = "%d.%m.%Y %H:%M"
 
     ITEM_SHOW_TODAY_NAME: Final[str] = "Show Today"
     ITEM_STARTSTOP_WORK_NAME: Final[str] = "Start/Stop Work"
@@ -30,6 +28,7 @@ class TrayGui:
             default_break_after_6h=self.config["work"]["default_break_after_6h"],
             default_break_after_9h=self.config["work"]["default_break_after_9h"],
         )
+        self.dth = DateTimeHandler()
 
     def __create_image(self, width, height, fgcolor, fg2color, bgcolor):
         image = Image.new("RGB", (width, height), bgcolor)
@@ -138,17 +137,17 @@ class TrayGui:
                 icon, "Could not find data for today. Start tracking first."
             )
         else:
-            dt_start = datetime.strptime(
-                f"{today_str} {today_data['start']}", self.DATETIME_FORMAT
+            dt_start = self.dth.datetime_str_to_datetime(
+                f"{today_str} {today_data['start']}"
             )
-            dt_end = datetime.now()
+            dt_end = self.dth.now()
             if today_data["end"] != "":
-                dt_end = datetime.strptime(
-                    f"{today_str} {today_data['end']}", self.DATETIME_FORMAT
+                dt_end = self.dth.datetime_str_to_datetime(
+                    f"{today_str} {today_data['end']}"
                 )
-            working_time = self.statsgen.datetime_diff_in_minutes(dt_start, dt_end)
-            working_time_h = int(working_time / 60)
-            working_time_min = int(working_time % 60)
+            working_time = self.dth.datetime_diff_in_minutes(dt_start, dt_end)
+            working_time_h = self.dth.minutes_to_full_hours(working_time)
+            working_time_min = self.dth.minutes_mod_hour(working_time)
             today_info = f"Start: {today_data['start']}\nEnd: {today_data['end']}\nBreaks: {today_data['breaks']}\nWorking Time: {working_time_h}h {working_time_min}min"
 
             self.__send_notification(icon, today_info)

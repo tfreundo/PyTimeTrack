@@ -1,13 +1,10 @@
 import logging
-from typing import Final
-from datetime import datetime
 import pandas as pd
 from pandas import DataFrame
+from util.datetimehandler import DateTimeHandler
 
 
 class StatsGenerator:
-    DATE_FORMAT = "%d.%m.%Y"
-    DATETIME_FORMAT: Final[str] = "%d.%m.%Y %H:%M"
     logger = logging.getLogger(__name__)
 
     def __init__(
@@ -17,9 +14,7 @@ class StatsGenerator:
     ) -> None:
         self.default_break_after_6h = default_break_after_6h
         self.default_break_after_9h = default_break_after_9h
-
-    def datetime_diff_in_minutes(self, start: datetime, end: datetime) -> int:
-        return (end - start).seconds / 60
+        self.dth = DateTimeHandler()
 
     def __apply_calc_default_breaks(self, row) -> int:
         """Calculates the default breaks for the time worked
@@ -71,13 +66,13 @@ class StatsGenerator:
         row_break_times = []
         for day in report.keys():
             try:
-                dt_start = datetime.strptime(
-                    f"{day} {report[day]['start']}", self.DATETIME_FORMAT
+                dt_start = self.dth.datetime_str_to_datetime(
+                    f"{day} {report[day]['start']}"
                 )
-                dt_end = datetime.strptime(
-                    f"{day} {report[day]['end']}", self.DATETIME_FORMAT
+                dt_end = self.dth.datetime_str_to_datetime(
+                    f"{day} {report[day]['end']}"
                 )
-                total_work_time = self.datetime_diff_in_minutes(dt_start, dt_end)
+                total_work_time = self.dth.datetime_diff_in_minutes(dt_start, dt_end)
                 row_work_times.append(total_work_time)
                 total_break_time = 0.0
                 breaks = report[day]["breaks"]
@@ -88,18 +83,18 @@ class StatsGenerator:
                 # Split into chunks of two values (start and stop of break)
                 for i in range(0, len(breaks), 2):
                     breaks_chunk = breaks[i : i + 2]
-                    dt_break_start = datetime.strptime(
-                        f"{day} {breaks_chunk[0]}", self.DATETIME_FORMAT
+                    dt_break_start = self.dth.datetime_str_to_datetime(
+                        f"{day} {breaks_chunk[0]}"
                     )
-                    dt_break_end = datetime.strptime(
-                        f"{day} {breaks_chunk[1]}", self.DATETIME_FORMAT
+                    dt_break_end = self.dth.datetime_str_to_datetime(
+                        f"{day} {breaks_chunk[1]}"
                     )
-                    break_time = self.datetime_diff_in_minutes(
+                    break_time = self.dth.datetime_diff_in_minutes(
                         dt_break_start, dt_break_end
                     )
                     total_break_time += break_time
                 row_break_times.append(total_break_time)
-                row_days.append(datetime.strptime(day, self.DATE_FORMAT))
+                row_days.append(self.dth.date_str_to_datetime(day))
             except ValueError:
                 self.logger.info(f"Skipping day {day}: {report[day]}")
 
