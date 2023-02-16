@@ -18,7 +18,7 @@ class StatsGenerator:
         self.default_break_after_6h = default_break_after_6h
         self.default_break_after_9h = default_break_after_9h
 
-    def __datetime_diff_in_minutes(self, start: datetime, end: datetime) -> int:
+    def datetime_diff_in_minutes(self, start: datetime, end: datetime) -> int:
         return (end - start).seconds / 60
 
     def __apply_calc_default_breaks(self, row) -> int:
@@ -77,7 +77,7 @@ class StatsGenerator:
                 dt_end = datetime.strptime(
                     f"{day} {report[day]['end']}", self.DATETIME_FORMAT
                 )
-                total_work_time = self.__datetime_diff_in_minutes(dt_start, dt_end)
+                total_work_time = self.datetime_diff_in_minutes(dt_start, dt_end)
                 row_work_times.append(total_work_time)
                 total_break_time = 0.0
                 breaks = report[day]["breaks"]
@@ -94,7 +94,7 @@ class StatsGenerator:
                     dt_break_end = datetime.strptime(
                         f"{day} {breaks_chunk[1]}", self.DATETIME_FORMAT
                     )
-                    break_time = self.__datetime_diff_in_minutes(
+                    break_time = self.datetime_diff_in_minutes(
                         dt_break_start, dt_break_end
                     )
                     total_break_time += break_time

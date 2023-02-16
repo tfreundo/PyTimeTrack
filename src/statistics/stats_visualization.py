@@ -11,7 +11,7 @@ class StatsVisualization:
         Args:
             stats (DataFrame): Statistics holding information about daily worked minutes and breaks.
         """
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(num="PyTimeTrack")
         ax.set_title(title)
         fig.autofmt_xdate()
         xfmt = mdates.DateFormatter("%d.%m")

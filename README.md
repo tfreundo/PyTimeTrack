@@ -48,12 +48,15 @@ You can configure PyTimeTracker to your needs using the [config.toml](./config.t
 | work | target_daily_work_minutes | The amount of minutes you have to work per day. |
 | work | default_break_after_6h | Amount of minutes to include after 6h of work. Set to `0` to deactivate. |
 | work | default_break_after_9h | Amount of minutes to include after 9h of work.  Set to `0` to deactivate.|
-| paths | reports | The path to a folder where the reports shall be stored. |
+| paths | reports | The path to a folder where the reports shall be stored. Point this e.g. to a local cloud storage folder for automated backups. |
 | development | devmode | Activates (if set to true) the development mode only necessary when developing features for this app. |
 
 To use another custom config TOML, see [Arguments](#arguments).
 
 ## Tested Platforms
-PyTimeTrack is for now only tested on **Windows**, should however be compatible to other platforms as well.
 
+### Windows
+PyTimeTrack is for now only tested on **Windows**, should however be compatible to other platforms as well.
 Just try to build it your own using PyInstaller (see [build_win.ps1](build_win.ps1)). If you needed to do adoptions, open an Pull Request and I'll review it. 
+
+On Windows you can add PyTimeTrack to your startup routine [like this](https://support.microsoft.com/en-us/windows/add-an-app-to-run-automatically-at-startup-in-windows-10-150da165-dcd9-7230-517b-cf3c295d89dd).

@@ -80,3 +80,17 @@ class TimeTracker:
             result_msg = f"Tracked break end time: {break_time}"
         self.logger.info(result_msg)
         return (report, result_msg)
+
+    def get_today(self, report: dict) -> Tuple[str, dict]:
+        """Returns the data of today
+
+        Args:
+            report (dict): The report to extract the data of today from
+
+        Returns:
+            Tuple[str, dict]: Tuple of the day and the data
+        """
+        today_str = self.__today_str()
+        if today_str in report.keys():
+            return today_str, report[today_str]
+        return today_str, None
