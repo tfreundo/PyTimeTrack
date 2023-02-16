@@ -93,4 +93,4 @@ class TimeTracker:
         today_str = self.__today_str()
         if today_str in report.keys():
             return today_str, report[today_str]
-        return None
+        return today_str, None
