@@ -15,3 +15,6 @@ Copy-Item -Path "config.toml" -Destination $DistDirectory
 
 Write-Host "Creating empty report directory" -ForegroundColor DarkGreen
 New-Item -Path $DistDirectory -Name "reports" -ItemType "directory" | Out-Null
+
+Write-Host "Copying README.md" -ForegroundColor DarkGreen
+Copy-Item -Path "README.md" -Destination $DistDirectory
