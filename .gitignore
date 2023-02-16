@@ -1,5 +1,4 @@
 # General
-.vscode
 __pycache__
 .pytest_cache
 
@@ -10,3 +9,4 @@ reports/*.json
 output.log
 build
 dist
+.coverage
