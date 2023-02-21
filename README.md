@@ -60,3 +60,10 @@ PyTimeTrack is for now only tested on **Windows**, should however be compatible 
 Just try to build it your own using PyInstaller (see [build_win.ps1](build_win.ps1)). If you needed to do adoptions, open an Pull Request and I'll review it. 
 
 On Windows you can add PyTimeTrack to your startup routine [like this](https://support.microsoft.com/en-us/windows/add-an-app-to-run-automatically-at-startup-in-windows-10-150da165-dcd9-7230-517b-cf3c295d89dd).
+
+## How to Release
+
+1. Update Changelog
+2. Merge to main
+3. Git tag
+4. Build and attach to GitHub releases

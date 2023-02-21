@@ -4,9 +4,9 @@ verify_ssl = true
 name = "PyTimeTrack"
 
 [packages]
-matplotlib = "~=3.7"
 pandas = "~=1.5"
 pystray = "~=0.19"
+seaborn = "~=0.12"
 
 [dev-packages]
 black = "*"

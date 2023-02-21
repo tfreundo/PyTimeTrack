@@ -15,6 +15,20 @@ Nothing
 
 Nothing
 
+## [1.0.1] - 2023-02-21
+
+### Added
+
+- Seaborn for visualization
+
+### Changed
+
+- Monthly statistics visualized as lines instead of bars
+
+### Removed
+
+Nothing
+
 ## [1.0.0] - 2023-02-16
 
 ### Added
