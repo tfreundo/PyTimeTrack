@@ -65,5 +65,5 @@ On Windows you can add PyTimeTrack to your startup routine [like this](https://s
 
 1. Update Changelog
 2. Merge to main
-3. Build and attach
-4. Tag
+3. Git tag
+4. Build and attach to GitHub releases
