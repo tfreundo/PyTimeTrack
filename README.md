@@ -68,8 +68,8 @@ Setting this information is with pyinstaller is described [here](https://pyinsta
 
 1. Update [changelog](./changelog.md)
 2. Run [build_win.ps1](./build_win.ps1)
-3. Tag
+3. Merge to main
+4. Tag
    1. `git tag v?.?.?`
    2. `git push --tags`
-4. Merge to main
 5. Create GitHub release and attach binaries
