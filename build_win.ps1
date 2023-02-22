@@ -37,3 +37,9 @@ New-Item -Path $DistDirectory -Name "reports" -ItemType "directory" | Out-Null
 
 Write-Host "Copying README.md" -ForegroundColor DarkGreen
 Copy-Item -Path "README.md" -Destination $DistDirectory
+
+Write-Host "Copying Logos and Favicon" -ForegroundColor DarkGreen
+Copy-Item -Path "src\assets\logo\logo.png" -Destination $DistDirectory
+Copy-Item -Path "src\assets\logo\logo_64px.png" -Destination $DistDirectory
+Copy-Item -Path "src\assets\logo\favicon.ico" -Destination $DistDirectory
+
