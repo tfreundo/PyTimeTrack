@@ -38,6 +38,7 @@ exe = EXE(
     codesign_identity=None,
     entitlements_file=None,
     version='win_version_info.txt',
+    icon='assets/logo/logo.ico'
 )
 coll = COLLECT(
     exe,
