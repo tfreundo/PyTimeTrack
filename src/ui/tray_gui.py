@@ -1,7 +1,8 @@
 import logging
+import sys
 from typing import Final
 from pystray import Icon, Menu, MenuItem
-from PIL import Image, ImageDraw
+from PIL import Image
 from report.filehandler import MonthlyFileHandler
 from tracking.tracker import TimeTracker
 from validation.plausibility_checker import PlausibilityChecker
@@ -19,6 +20,13 @@ class TrayGui:
     ITEM_MONTHLY_STATS_NAME: Final[str] = "Monthly Statistics"
     ITEM_EXIT_NAME: Final[str] = "Exit"
 
+    LOGO_PATHS: Final[list] = [
+        # dist
+        "logo_64px.png",
+        # developmenmt
+        "src/assets/logo/logo_64px.png",
+    ]
+
     def __init__(self, config) -> None:
         self.config = config
         self.fh = MonthlyFileHandler(self.config)
@@ -30,15 +38,14 @@ class TrayGui:
         )
         self.dth = DateTimeHandler()
 
-    def __create_image(self, width, height, fgcolor, fg2color, bgcolor):
-        image = Image.new("RGB", (width, height), bgcolor)
-        dc = ImageDraw.Draw(image)
-
-        dc.ellipse(xy=(0, 0, width, height), width=6, outline=fgcolor)
-        dc.line(xy=(15, 10, width / 2, height / 2), fill=fgcolor, width=8)
-        dc.line(xy=(width / 2, height / 2, 58, height / 2), fill=fg2color, width=8)
-
-        return image
+    def __get_logo_image(self) -> Image:
+        for path in self.LOGO_PATHS:
+            try:
+                return Image.open(path)
+            except FileNotFoundError:
+                pass
+        self.logger.warn(f"Could not find logo in given paths: {self.LOGO_PATHS}")
+        sys.exit(1)
 
     def __create_menu(self) -> Menu:
         menu_items = [
@@ -75,7 +82,7 @@ class TrayGui:
     def start(self):
         icon = Icon(
             "PyTimeTrack",
-            icon=self.__create_image(64, 64, "#C8E6C9", "#81C784", "#455A64"),
+            icon=self.__get_logo_image(),
             menu=self.__create_menu(),
         )
 
