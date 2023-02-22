@@ -15,6 +15,20 @@ Nothing
 
 Nothing
 
+## [1.0.4] - 2023-02-22
+
+### Added
+
+Nothing
+
+### Changed
+
+- Improved logo visually
+
+### Removed
+
+Nothing
+
 ## [1.0.3] - 2023-02-22
 
 ### Added
