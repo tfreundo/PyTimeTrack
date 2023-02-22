@@ -61,6 +61,9 @@ Just try to build it your own using PyInstaller (see [build_win.ps1](build_win.p
 
 On Windows you can add PyTimeTrack to your startup routine [like this](https://support.microsoft.com/en-us/windows/add-an-app-to-run-automatically-at-startup-in-windows-10-150da165-dcd9-7230-517b-cf3c295d89dd).
 
+Windows requires additional version data (shown in properties-details tab of the executable).
+Setting this information is with pyinstaller is described [here](https://pyinstaller.org/en/stable/usage.html?highlight=windows#capturing-windows-version-data).
+
 ## How to Release
 
 1. Update Changelog
