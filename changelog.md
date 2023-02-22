@@ -15,6 +15,21 @@ Nothing
 
 Nothing
 
+## [1.0.2] - 2023-02-22
+
+### Added
+
+- Version info for windows executables
+
+### Changed
+
+- Build script for windows
+
+### Removed
+
+- Nothing
+
+
 ## [1.0.1] - 2023-02-21
 
 ### Added
