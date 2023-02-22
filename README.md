@@ -1,5 +1,6 @@
 # PyTimeTrack
-Your minimalistic time tracking tool.
+
+![logo](./src/assets/logo/logo_64px.png) ~~ **Your minimalistic time tracking tool** ~~
 
 It lives in your tray:
 
