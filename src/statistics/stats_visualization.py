@@ -3,10 +3,14 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sns
 from pandas import DataFrame
+from util.datetimehandler import DateTimeHandler
 
 
 class StatsVisualization:
     STYLE_PALETTE: Final[str] = "Dark2"
+
+    def __init__(self) -> None:
+        self.dth = DateTimeHandler()
 
     def bar_daily_worked_minutes(self, title: str, stats: DataFrame):
         """Creates a bar chart showing the daily worked minutes, breaks and the daily target line.
@@ -41,6 +45,13 @@ class StatsVisualization:
         # Adapt plot
         ax.set_title(title)
         fig.autofmt_xdate()
+        # Set plot range to always show the complete month, even if there's no data for some days
+        ax.set_xlim(
+            [
+                self.dth.first_day_of_current_month(),
+                self.dth.last_day_of_current_month(),
+            ]
+        )
         xfmt = mdates.DateFormatter("%d.%m")
         ax.xaxis.set_major_formatter(xfmt)
         ax.set_xlabel("day")
