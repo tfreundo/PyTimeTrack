@@ -15,6 +15,20 @@ Nothing
 
 Nothing
 
+## [1.0.5] - 2023-03-27
+
+### Added
+
+Nothing
+
+### Changed
+
+- Fix visualization to always show the complete month even if no data is available
+
+### Removed
+
+Nothing
+
 ## [1.0.4] - 2023-02-22
 
 ### Added
