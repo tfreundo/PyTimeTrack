@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Final
+import calendar
 
 
 class DateTimeHandler:
@@ -33,3 +34,11 @@ class DateTimeHandler:
 
     def minutes_mod_hour(self, mins: float) -> int:
         return int(mins % 60)
+
+    def first_day_of_current_month(self) -> datetime:
+        return self.today().replace(day=1)
+
+    def last_day_of_current_month(self) -> datetime:
+        today = self.today()
+        days_in_month = calendar.monthrange(today.year, today.month)[1]
+        return today.replace(day=days_in_month)
