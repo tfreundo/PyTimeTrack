@@ -15,6 +15,20 @@ Nothing
 
 Nothing
 
+## [1.0.6] - 2023-04-11
+
+### Added
+
+Nothing
+
+### Changed
+
+- Bump up pandas to 2.0.0
+
+### Removed
+
+Nothing
+
 ## [1.0.5] - 2023-03-27
 
 ### Added
