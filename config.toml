@@ -1,8 +1,8 @@
 # Configuration of PyTimeTracker
 [work]
 target_daily_work_minutes = 480
-default_break_after_6h = 0
-default_break_after_9h = 0
+default_break_after_6h = 45
+default_break_after_9h = 15
 
 [paths]
 reports = "reports"

@@ -10,5 +10,9 @@
         "./test",
         "-p",
         "test_*.py"
-    ]
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "python.formatting.provider": "none"
 }

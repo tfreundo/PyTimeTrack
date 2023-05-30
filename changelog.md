@@ -15,6 +15,20 @@ Nothing
 
 Nothing
 
+# [1.0.7] - 2023-05-30
+
+### Added
+
+Nothing
+
+### Changed
+
+- Prettified monthly statistics chart
+
+### Removed
+
+Nothing
+
 ## [1.0.6] - 2023-04-11
 
 ### Added

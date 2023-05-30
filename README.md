@@ -39,7 +39,7 @@ tracks your time in a data format that is easy to read and to manually adapt if 
 
 and visualizes the data to help you keep track:
 
-![example_stats.png](images/stats.png)
+![stats_prettified.png](images/stats_prettified.png)
 
 ## Configuration
 You can configure PyTimeTracker to your needs using the [config.toml](./config.toml).
@@ -68,7 +68,7 @@ Setting this information is with pyinstaller is described [here](https://pyinsta
 ## How to Release
 
 1. Update [changelog](./changelog.md)
-2. Run [build_win.ps1](./build_win.ps1)
+2. Run [build_win.ps1](./build_win.ps1) like `./build_win.ps1 -version x.x.x`
 3. Merge to main
 4. Tag
    1. `git tag v?.?.?`

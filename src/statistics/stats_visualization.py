@@ -7,10 +7,26 @@ from util.datetimehandler import DateTimeHandler
 
 
 class StatsVisualization:
-    STYLE_PALETTE: Final[str] = "Dark2"
+    STYLE_PALETTE: Final[str] = "pastel"
+    # Values can be checked in sns.axes_style()
+    STYLE_THEME: Final[dict] = {
+        "axes.labelcolor": "white",
+        "axes.edgecolor": "white",
+        "grid.color": "white",
+        "text.color": "white",
+        "xtick.color": "white",
+        "ytick.color": "white",
+        "axes.facecolor": "#183446",
+        "figure.facecolor": "#022f40",
+    }
 
     def __init__(self) -> None:
         self.dth = DateTimeHandler()
+        # Seaborn style
+        sns.set_theme(
+            style="whitegrid",
+            rc=self.STYLE_THEME,
+        )
 
     def bar_daily_worked_minutes(self, title: str, stats: DataFrame):
         """Creates a bar chart showing the daily worked minutes, breaks and the daily target line.
@@ -18,15 +34,17 @@ class StatsVisualization:
         Args:
             stats (DataFrame): Statistics holding information about daily worked minutes and breaks.
         """
+
         fig, ax = plt.subplots(num="PyTimeTrack")
 
         # Transform data from wide to long format for visualization
         df_stats_vis = stats.reset_index()
         df_stats_vis.drop("default_break_minutes", axis=1, inplace=True)
+        df_stats_vis.drop("total_break_minutes", axis=1, inplace=True)
+
         df_stats_vis = df_stats_vis.rename(
             columns={
                 "total_work_minutes": "Work",
-                "total_break_minutes": "Break",
                 "total_work_without_break": "Pure Work",
                 "target_work_minutes": "Target",
             }
@@ -35,7 +53,6 @@ class StatsVisualization:
             id_vars="day",
             value_vars=[
                 "Work",
-                "Break",
                 "Pure Work",
                 "Target",
             ],
@@ -69,4 +86,5 @@ class StatsVisualization:
             dashes=True,
             palette=self.STYLE_PALETTE,
         )
+
         plt.show()
