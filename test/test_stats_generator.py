@@ -40,36 +40,33 @@ class TestStatsGenerator(unittest.TestCase):
             report=self.test_report, target_daily_work_minutes=480
         )
 
-        a = df_result.loc[0]["day"]
-        b = a == datetime.date(year=2023, month=2, day=1)
-
         self.assertEqual(
-            df_result.loc[0]["day"], datetime.date(year=2023, month=2, day=1)
+            df_result.loc[0]["day"], datetime.datetime(year=2023, month=2, day=1)
         )
 
         self.assertEqual(
-            df_result.loc[0]["day"], datetime.date(year=2023, month=2, day=1)
+            df_result.loc[0]["day"], datetime.datetime(year=2023, month=2, day=1)
         )
         self.assertEqual(df_result.loc[0]["total_work_minutes"], 516)
         # Default break because worked over 6h
         self.assertEqual(df_result.loc[0]["total_break_minutes"], 30)
         self.assertEqual(df_result.loc[0]["total_work_without_break"], 486)
         self.assertEqual(
-            df_result.loc[1]["day"], datetime.date(year=2023, month=2, day=2)
+            df_result.loc[1]["day"], datetime.datetime(year=2023, month=2, day=2)
         )
         self.assertEqual(df_result.loc[1]["total_work_minutes"], 743)
         # No adjustment of breaks because more than default
         self.assertEqual(df_result.loc[1]["total_break_minutes"], 96)
         self.assertEqual(df_result.loc[1]["total_work_without_break"], 647)
         self.assertEqual(
-            df_result.loc[2]["day"], datetime.date(year=2023, month=2, day=3)
+            df_result.loc[2]["day"], datetime.datetime(year=2023, month=2, day=3)
         )
         self.assertEqual(df_result.loc[2]["total_work_minutes"], 743)
         # Default break because worked over 9h
         self.assertEqual(df_result.loc[2]["total_break_minutes"], 45)
         self.assertEqual(df_result.loc[2]["total_work_without_break"], 698)
         self.assertEqual(
-            df_result.loc[3]["day"], datetime.date(year=2023, month=2, day=4)
+            df_result.loc[3]["day"], datetime.datetime(year=2023, month=2, day=4)
         )
         self.assertEqual(df_result.loc[3]["total_work_minutes"], 250)
         # Worked less than 6h (no break added)
