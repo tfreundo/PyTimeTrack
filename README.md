@@ -39,7 +39,7 @@ tracks your time in a data format that is easy to read and to manually adapt if 
 
 and visualizes the data to help you keep track:
 
-![example_stats.png](images/stats.png)
+![stats_prettified.png](images/stats_prettified.png)
 
 ## Configuration
 You can configure PyTimeTracker to your needs using the [config.toml](./config.toml).
