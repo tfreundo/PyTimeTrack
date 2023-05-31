@@ -7,6 +7,7 @@ class DateTimeHandler:
     DATE_FORMAT: Final[str] = "%d.%m.%Y"
     DATETIME_FORMAT: Final[str] = "%d.%m.%Y %H:%M"
     TIME_FORMAT: Final[str] = "%H:%M"
+    DATE_FILE_FORMAT: Final[str] = "%Y%m%d%H%M%S"
 
     def today(self) -> datetime:
         return datetime.today()
@@ -17,8 +18,14 @@ class DateTimeHandler:
     def now(self) -> datetime:
         return datetime.now()
 
-    def now_str(self) -> str:
-        return self.now().strftime(self.TIME_FORMAT)
+    def __datetime_to_str(self, datetime: datetime, format: str) -> str:
+        return datetime.strftime(format)
+
+    def now_time_str(self) -> str:
+        return self.__datetime_to_str(self.now(), self.TIME_FORMAT)
+
+    def now_datetime_file_str(self) -> str:
+        return self.__datetime_to_str(self.now(), self.DATE_FILE_FORMAT)
 
     def datetime_diff_in_minutes(self, start: datetime, end: datetime) -> int:
         return (end - start).seconds / 60

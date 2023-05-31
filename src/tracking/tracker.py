@@ -40,14 +40,14 @@ class TimeTracker:
         if report[today_str]:
             # There was no start time yet
             if report[today_str][self.KEY_START] == "":
-                start_time = self.dth.now_str()
+                start_time = self.dth.now_time_str()
                 result_msg = f"Tracked work start time: {start_time}"
                 self.logger.info(result_msg)
                 report[today_str][self.KEY_START] = start_time
 
             # There was no end time yet
             elif report[today_str][self.KEY_START] != "":
-                end_time = self.dth.now_str()
+                end_time = self.dth.now_time_str()
                 result_msg = f"Tracked work end time: {end_time}"
                 self.logger.info(result_msg)
                 report[today_str][self.KEY_END] = end_time
@@ -64,7 +64,7 @@ class TimeTracker:
             Tuple[dict, str]: The updated report and a message what was updated
         """
         today_str = self.dth.today_str()
-        break_time = self.dth.now_str()
+        break_time = self.dth.now_time_str()
         report[today_str][self.KEY_WORKBREAKS].append(break_time)
         result_msg = f"Tracked break start time: {break_time}"
         if len(report[today_str][self.KEY_WORKBREAKS]) % 2 == 0:
