@@ -15,6 +15,20 @@ Nothing
 
 Nothing
 
+# [1.1.0] - 2023-05-31
+
+### Added
+
+- Export of statistics of all reports into a Markdown report
+
+### Changed
+
+- Docs
+
+### Removed
+
+Nothing
+
 # [1.0.7] - 2023-05-30
 
 ### Added
