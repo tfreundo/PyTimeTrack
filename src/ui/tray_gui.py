@@ -145,13 +145,19 @@ class TrayGui:
         reports_df_stats = []
         for report_path in reports_paths:
             report = self.fh.read_report(report_path)
-            df_stats = self.statsgen.stats_export(
-                report=report,
-                target_daily_work_minutes=self.config["work"][
-                    "target_daily_work_minutes"
-                ],
-            )
-            reports_df_stats.append(df_stats)
+            self.logger.info(f"Validating report {report_path}")
+            self.logger.info(report)
+            report_is_valid, errors = self.pc.validate(report, check_start_end=False)
+            if len(errors) > 0:
+                self.__send_validation_error_notification(icon, errors)
+            if report_is_valid:
+                df_stats = self.statsgen.stats_export(
+                    report=report,
+                    target_daily_work_minutes=self.config["work"][
+                        "target_daily_work_minutes"
+                    ],
+                )
+                reports_df_stats.append(df_stats)
         self.efh.write_stats_export(reports_df_stats)
 
     def __on_show_today_clicked(self, icon: Icon, item: str) -> None:

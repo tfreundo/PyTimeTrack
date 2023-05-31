@@ -66,6 +66,8 @@ class MonthlyFileHandler:
 
 
 class StatsExportFileHandler:
+    logger = logging.getLogger(__name__)
+
     def __init__(self, config: dict) -> None:
         self.config = config
         self.dth = DateTimeHandler()
@@ -74,9 +76,10 @@ class StatsExportFileHandler:
         return f"{self.config['paths']['reports']}"
 
     def write_stats_export(self, reports_df_stats: list[DataFrame]):
+        filename = f"{self.get_report_path()}/{self.dth.now_datetime_file_str()}_PyTimeTrack_Report"
         mdFile = MdUtils(
             author="PyTimeTrack",
-            file_name=f"{self.get_report_path()}/{self.dth.now_datetime_file_str()}_PyTimeTrack_Report",
+            file_name=filename,
             title="PyTimeTrack Report",
         )
 
@@ -114,5 +117,6 @@ class StatsExportFileHandler:
                 f"Total work: {self.dth.minutes_to_full_hours(total_work_in_month_mins)}h {self.dth.minutes_mod_hour(total_work_in_month_mins)}min"
             )
 
-        mdFile.new_table_of_contents(table_title="Contents", depth=1)
+        mdFile.new_table_of_contents(table_title="Months", depth=1)
+        self.logger.info(f"Writing report to {filename}.md")
         mdFile.create_md_file()

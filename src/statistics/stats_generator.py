@@ -138,6 +138,7 @@ class StatsGenerator:
         Returns:
             pandas.DataFrame: Statistics export.
         """
+        self.logger.info("Creating stats export")
         df_daily_worked_minutes = self.daily_worked_minutes(
             report, target_daily_work_minutes
         )
