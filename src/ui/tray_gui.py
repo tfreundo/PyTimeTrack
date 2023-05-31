@@ -15,9 +15,9 @@ class TrayGui:
     logger = logging.getLogger(__name__)
 
     ITEM_SHOW_TODAY_NAME: Final[str] = "Show Today"
+    ITEM_MONTHLY_STATS_NAME: Final[str] = "Show Month"
     ITEM_STARTSTOP_WORK_NAME: Final[str] = "Start/Stop Work"
     ITEM_STARTSTOP_BREAK_NAME: Final[str] = "Start/Stop Break"
-    ITEM_MONTHLY_STATS_NAME: Final[str] = "Monthly Statistics"
     ITEM_STATS_EXPORT: Final[str] = "Statistics Export"
     ITEM_EXIT_NAME: Final[str] = "Exit"
 
@@ -52,6 +52,9 @@ class TrayGui:
     def __create_menu(self) -> Menu:
         menu_items = [
             MenuItem(self.ITEM_SHOW_TODAY_NAME, action=self.__on_show_today_clicked),
+            MenuItem(
+                self.ITEM_MONTHLY_STATS_NAME, action=self.__on_monthly_stats_clicked
+            ),
             Menu.SEPARATOR,
             MenuItem(
                 self.ITEM_STARTSTOP_WORK_NAME, action=self.__on_startstop_work_clicked
@@ -60,9 +63,6 @@ class TrayGui:
                 self.ITEM_STARTSTOP_BREAK_NAME, action=self.__on_workbreak_clicked
             ),
             Menu.SEPARATOR,
-            MenuItem(
-                self.ITEM_MONTHLY_STATS_NAME, action=self.__on_monthly_stats_clicked
-            ),
             MenuItem(self.ITEM_STATS_EXPORT, action=self.__on_stats_export_clicked),
             Menu.SEPARATOR,
             MenuItem(self.ITEM_EXIT_NAME, action=lambda icon, item: icon.stop()),
