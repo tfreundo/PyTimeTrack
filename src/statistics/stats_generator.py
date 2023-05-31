@@ -59,7 +59,7 @@ class StatsGenerator:
             target_daily_work_minutes (int): The amount of minutes of daily target work
 
         Returns:
-            dict: Daily worked hours with subtracted breaks.
+            pandas.DataFrame: Daily worked hours with subtracted breaks.
         """
         row_days = []
         row_work_times = []
@@ -123,3 +123,57 @@ class StatsGenerator:
         df_result["target_work_minutes"] = target_daily_work_minutes
 
         return df_result
+
+    def stats_export(
+        self,
+        report: dict,
+        target_daily_work_minutes: int,
+    ) -> DataFrame:
+        """Calculates the statistics export.
+
+        Args:
+            report (dict): The report to use.
+            target_daily_work_minutes (int): The amount of minutes of daily target work
+
+        Returns:
+            pandas.DataFrame: Statistics export.
+        """
+        self.logger.info("Creating stats export")
+        df_daily_worked_minutes = self.daily_worked_minutes(
+            report, target_daily_work_minutes
+        )
+        df_stats_export = df_daily_worked_minutes.copy(deep=True)
+
+        # Work
+        df_stats_export["total_work_without_break_h"] = (
+            df_stats_export["total_work_without_break"] / 60
+        )
+        df_stats_export["total_work_without_break_h"] = df_stats_export[
+            "total_work_without_break_h"
+        ].astype(int)
+        df_stats_export["total_work_without_break_min"] = (
+            df_stats_export["total_work_without_break"] % 60
+        )
+        df_stats_export["total_work_without_break_min"] = df_stats_export[
+            "total_work_without_break_min"
+        ].astype(int)
+
+        # Break
+        df_stats_export["total_break_h"] = df_stats_export["total_break_minutes"] / 60
+        df_stats_export["total_break_h"] = df_stats_export["total_break_h"].astype(int)
+        df_stats_export["total_break_min"] = df_stats_export["total_break_minutes"] % 60
+        df_stats_export["total_break_min"] = df_stats_export["total_break_min"].astype(
+            int
+        )
+
+        return df_stats_export[
+            [
+                "day",
+                "total_work_without_break",
+                "total_work_without_break_h",
+                "total_work_without_break_min",
+                "total_break_minutes",
+                "total_break_h",
+                "total_break_min",
+            ]
+        ]

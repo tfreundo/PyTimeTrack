@@ -4,6 +4,7 @@ __pycache__
 
 # PyTimeTrack specific
 reports/*.json
+reports/*.md
 *_config.toml
 *.bat
 output.log

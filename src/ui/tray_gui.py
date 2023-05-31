@@ -3,7 +3,7 @@ import sys
 from typing import Final
 from pystray import Icon, Menu, MenuItem
 from PIL import Image
-from report.filehandler import MonthlyFileHandler
+from report.filehandler import MonthlyFileHandler, StatsExportFileHandler
 from tracking.tracker import TimeTracker
 from validation.plausibility_checker import PlausibilityChecker
 from statistics.stats_generator import StatsGenerator
@@ -15,9 +15,10 @@ class TrayGui:
     logger = logging.getLogger(__name__)
 
     ITEM_SHOW_TODAY_NAME: Final[str] = "Show Today"
+    ITEM_MONTHLY_STATS_NAME: Final[str] = "Show Month"
     ITEM_STARTSTOP_WORK_NAME: Final[str] = "Start/Stop Work"
     ITEM_STARTSTOP_BREAK_NAME: Final[str] = "Start/Stop Break"
-    ITEM_MONTHLY_STATS_NAME: Final[str] = "Monthly Statistics"
+    ITEM_STATS_EXPORT: Final[str] = "Statistics Export"
     ITEM_EXIT_NAME: Final[str] = "Exit"
 
     LOGO_PATHS: Final[list] = [
@@ -30,6 +31,7 @@ class TrayGui:
     def __init__(self, config) -> None:
         self.config = config
         self.fh = MonthlyFileHandler(self.config)
+        self.efh = StatsExportFileHandler(self.config)
         self.tt = TimeTracker()
         self.pc = PlausibilityChecker()
         self.statsgen = StatsGenerator(
@@ -50,6 +52,9 @@ class TrayGui:
     def __create_menu(self) -> Menu:
         menu_items = [
             MenuItem(self.ITEM_SHOW_TODAY_NAME, action=self.__on_show_today_clicked),
+            MenuItem(
+                self.ITEM_MONTHLY_STATS_NAME, action=self.__on_monthly_stats_clicked
+            ),
             Menu.SEPARATOR,
             MenuItem(
                 self.ITEM_STARTSTOP_WORK_NAME, action=self.__on_startstop_work_clicked
@@ -58,9 +63,8 @@ class TrayGui:
                 self.ITEM_STARTSTOP_BREAK_NAME, action=self.__on_workbreak_clicked
             ),
             Menu.SEPARATOR,
-            MenuItem(
-                self.ITEM_MONTHLY_STATS_NAME, action=self.__on_monthly_stats_clicked
-            ),
+            MenuItem(self.ITEM_STATS_EXPORT, action=self.__on_stats_export_clicked),
+            Menu.SEPARATOR,
             MenuItem(self.ITEM_EXIT_NAME, action=lambda icon, item: icon.stop()),
         ]
         menu = Menu(*menu_items)
@@ -135,6 +139,26 @@ class TrayGui:
                 title=f"Daily Worked Minutes ({report_filename})",
                 stats=df_stats_daily_worked_minutes,
             )
+
+    def __on_stats_export_clicked(self, icon: Icon, item: str) -> None:
+        reports_paths = self.fh.list_reports_paths()
+        reports_df_stats = []
+        for report_path in reports_paths:
+            report = self.fh.read_report(report_path)
+            self.logger.info(f"Validating report {report_path}")
+            self.logger.info(report)
+            report_is_valid, errors = self.pc.validate(report, check_start_end=False)
+            if len(errors) > 0:
+                self.__send_validation_error_notification(icon, errors)
+            if report_is_valid:
+                df_stats = self.statsgen.stats_export(
+                    report=report,
+                    target_daily_work_minutes=self.config["work"][
+                        "target_daily_work_minutes"
+                    ],
+                )
+                reports_df_stats.append(df_stats)
+        self.efh.write_stats_export(reports_df_stats)
 
     def __on_show_today_clicked(self, icon: Icon, item: str) -> None:
         current_report = self.fh.read_current_report()

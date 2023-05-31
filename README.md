@@ -4,7 +4,7 @@
 
 It lives in your tray:
 
-![tray2.png](images/tray2.png)
+![tray.png](images/tray.png)
 
 tracks your time in a data format that is easy to read and to manually adapt if necessary:
 
@@ -40,6 +40,10 @@ tracks your time in a data format that is easy to read and to manually adapt if 
 and visualizes the data to help you keep track:
 
 ![stats_prettified.png](images/stats_prettified.png)
+
+You can also export all your reports as an overview in Markdown:
+
+![report.png](images/report.png)
 
 ## Configuration
 You can configure PyTimeTracker to your needs using the [config.toml](./config.toml).
