@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Final
 import calendar
 
@@ -45,7 +45,14 @@ class DateTimeHandler:
     def first_day_of_current_month(self) -> datetime:
         return self.today().replace(day=1)
 
+    def first_day_of_next_month(self) -> datetime:
+        return self.last_day_of_current_month() + timedelta(days=1)
+
     def last_day_of_current_month(self) -> datetime:
         today = self.today()
         days_in_month = calendar.monthrange(today.year, today.month)[1]
         return today.replace(day=days_in_month)
+
+    def last_day_of_previous_month(self) -> datetime:
+        today = self.today().replace(day=1)
+        return today - timedelta(days=1)

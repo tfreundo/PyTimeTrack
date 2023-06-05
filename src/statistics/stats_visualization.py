@@ -65,8 +65,8 @@ class StatsVisualization:
         # Set plot range to always show the complete month, even if there's no data for some days
         ax.set_xlim(
             [
-                self.dth.first_day_of_current_month(),
-                self.dth.last_day_of_current_month(),
+                self.dth.last_day_of_previous_month(),
+                self.dth.first_day_of_next_month(),
             ]
         )
         xfmt = mdates.DateFormatter("%d.%m")
