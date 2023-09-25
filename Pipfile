@@ -4,7 +4,7 @@ verify_ssl = true
 name = "PyTimeTrack"
 
 [packages]
-pandas = "~=2.0"
+pandas = "~=2.1"
 pystray = "~=0.19"
 seaborn = "~=0.12"
 mdutils = "~=1.6.0"
